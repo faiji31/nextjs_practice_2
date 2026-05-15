@@ -1,21 +1,23 @@
-// src/components/cards/ProductCard.jsx
+// src/components/ServiceCard.jsx
 
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Star, ShoppingCart, Eye } from "lucide-react";
 
 const ServiceCard = ({ service, index }) => {
+  // Prevent rendering if service is undefined
+  if (!service) return null;
+
   const {
     title,
     bangla,
     image,
     price,
     discount = service.percentage || 0,
-    ratings,
-    reviews,
-    sold,
+    ratings = 0,
+    reviews = 0,
+    sold = 0,
   } = service;
 
   // Calculate discounted price
@@ -33,14 +35,15 @@ const ServiceCard = ({ service, index }) => {
       )}
 
       {/* Image Section */}
-      <Link href={`/products/${index}`} className="block relative overflow-hidden">
+      <Link
+        href={`/products/${index}`}
+        className="block relative overflow-hidden"
+      >
         <div className="relative h-64 bg-gradient-to-br from-gray-50 to-gray-100">
           <img
             src={image}
             alt={title}
-            fill
-            className="object-contain p-4 group-hover:scale-110 transition-transform duration-500"
-            sizes="(max-width: 768px) 100vw, 25vw"
+            className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500"
           />
         </div>
 
@@ -98,14 +101,24 @@ const ServiceCard = ({ service, index }) => {
         </div>
 
         {/* Buttons */}
-        <div className="mt-5 flex gap-3">
-          <button className="flex-1 bg-pink-600 hover:bg-pink-700 text-white py-2.5 rounded-xl font-semibold transition duration-300">
-            Buy Now
-          </button>
+        <div className="mt-5 flex flex-col gap-3">
+          {/* Details Button */}
+          <Link href={`/services/${index}`} className="w-full">
+            <button className="w-full border border-pink-600 text-pink-600 hover:bg-pink-50 py-2.5 rounded-xl font-semibold transition duration-300">
+              View Details
+            </button>
+          </Link>
 
-          <button className="w-12 h-12 flex items-center justify-center border border-gray-200 rounded-xl hover:bg-gray-100 transition">
-            <ShoppingCart className="w-5 h-5 text-gray-700" />
-          </button>
+          {/* Buy Now + Cart */}
+          <div className="flex gap-3">
+            <button className="flex-1 bg-pink-600 hover:bg-pink-700 text-white py-2.5 rounded-xl font-semibold transition duration-300">
+              Buy Now
+            </button>
+
+            <button className="w-12 h-12 flex items-center justify-center border border-gray-200 rounded-xl hover:bg-gray-100 transition">
+              <ShoppingCart className="w-5 h-5 text-gray-700" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
